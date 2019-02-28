@@ -1,0 +1,23 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "amazon like app where customers make orders and inventory is updated",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sespert/bamazon.git"
+  },
+  "author": "Shirley Espert Galarce",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sespert/bamazon/issues"
+  },
+  "homepage": "https://github.com/sespert/bamazon#readme",
+  "dependencies": {
+    "inquirer": "^6.2.2",
+    "mysql": "^2.16.0"
+  }
+}
