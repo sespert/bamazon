@@ -11,16 +11,14 @@ var connection = mysql.createConnection({
     database:"bamazon"
 });
 
-// //Connect to MySql and run function
+//Connect to MySql and run function
 connection.connect(function(err){
     if(err) throw err;
     console.log("Connected as ID " + connection.threadId);
     displayItems();
-    // connection.end();
-    // test(1);
-
 })
 
+//Display all of the items available for sale
 function displayItems() {
     connection.query("SELECT item_id,product_name,price FROM products", function(err,res){
         if(err) throw err;
@@ -29,59 +27,70 @@ function displayItems() {
         for(var i = 0;i<res.length;i++) {
             console.log(res[i].item_id + " | " + res[i].product_name + " | $" + res[i].price);
         }
-
+        console.log("--------------------------");
         placeOrder();
-        // test(1);
     })
 }
 
-
+//Ask the user what item he wants to buy and how many.
 function placeOrder(){
-    inquirer.prompt([{
+    inquirer.prompt({
         name:"id",
         type:"input",
-        message:"Which product would you like to buy? Choose the ID"
-    } , {
-        name:"units",
-        type:"input",
-        message:"How many would you like?"
-    }]).then(function(answer){
-        var query = "SELECT product_name,price,stock_quantity FROM products WHERE ?";
-        connection.query(query,{item_id: answer.id},function(err,res){
-            if(err) throw err;
-            if(res[0].stock_quantity < answer.units) {
-                console.log("Insufficient quantity!");
-            } else {
-                var updateQuant = res[0].stock_quantity - answer.units;
-                // console.log(updateQuant);
-                updateInventory(updateQuant,answer.id,answer.units);
-                console.log("Lets buy");
+        message:"Which product would you like to buy? Choose the ID",
+        validate: function(value) {
+            if (isNaN(value) === false) {
+              return true;
             }
-        });
-        
+            return false;
+          }
+    }).then(function(answer) {
+        checkID(answer.id);
     });
 };
 
+//Helper function to check if user typed an existing ID
+function checkID(arg) {
+    connection.query("SELECT item_id FROM products", function(err,res) {
+        if (err) throw err;
+        if (arg > res.length) {                
+            console.log("No product with that number ID. Choose another one.");
+            placeOrder();
+        } else {
+            inquirer.prompt({
+                name:"units",
+                type:"input",
+                message:"How many would you like?"
+            }).then(function(answer){
+                //Once the customer has placed the order check if the store has enough of the product to meet the customer's request.
+                var query = "SELECT product_name,price,stock_quantity FROM products WHERE ?";
+                connection.query(query,{item_id: arg},function(err,res){
+                    if(err) throw err;
+                    if(res[0].stock_quantity < answer.units) {
+                        console.log("Insufficient quantity!");
+                        placeOrder();
+                    } else {
+                        var updateQuant = res[0].stock_quantity - answer.units;
+                        updateInventory(updateQuant,arg,answer.units);
+                    }
+                });                    
+            });  
+        }      
+    });
+}
+
+
+//If enough inventory, fulfill the customer's order and update database.
 function updateInventory(arg1,arg2,arg3) {
-    var query = "UPDATE products SET ? WHERE item_id = 1";
-    connection.query(query,{stock_quantity: arg1},function(err){
+    var query = "UPDATE products SET ? WHERE ?";
+    connection.query(query,[{stock_quantity: arg1}, {item_id: arg2}],function(err){
         if(err) throw err;
         var query = "SELECT price FROM products WHERE ?";
         connection.query(query,{item_id: arg2},function(err,res){
             if(err) throw err;
             var totalPrice = res[0].price * arg3;
-            // console.log(totalPrice);
-            console.log("The cost of your puschase is $" + totalPrice);
-            
+            console.log("The cost of your purchase is $" + totalPrice);
+            connection.end();            
         });
     })
-}
-
-function test(arg) {
-    var query = "SELECT price FROM products WHERE ?";
-    console.log(arg);
-        connection.query(query,{item_id: "1"},function(err,res){
-            if(err) throw err;
-            console.log(res);
-        });
 }
