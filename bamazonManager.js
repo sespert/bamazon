@@ -54,12 +54,19 @@ function managerOptions() {
 function viewProducts() {
     connection.query("SELECT item_id,product_name,price,stock_quantity FROM products", function(err,res){
         if(err) throw err;
-        console.log("Items in stock");
-        console.log("\nItem ID| Product   | Quantity    | Price");
-        console.log("-------------------------------------------");
+       
+        var itemsTable = [];
+
         for(var i = 0;i<res.length;i++) {
-            console.log(res[i].item_id + " | " + res[i].product_name + " | " + res[i].stock_quantity + " | $" + res[i].price);
+            itemsTable[i] = {
+                ID: res[i].item_id,
+                PRODUCT: res[i].product_name,
+                QUANTITY: res[i].stock_quantity,
+                PRICE: res[i].price
+            };     
         }
+        console.log("Items in stock");
+        console.table(itemsTable);    
         console.log("-------------------------------------------");
         managerOptions();
     })
@@ -69,13 +76,19 @@ function viewProducts() {
 function viewInventory() {
     connection.query("SELECT item_id,product_name,price,stock_quantity FROM products WHERE stock_quantity < 5", function(err,res){
         if(err) throw err;
-        console.log("Items with low inventory");
-        console.log("\nItem ID| Product   | Quantity    | Price");
-        console.log("-------------------------------------------");
+
+        var itemsTable = [];
+
         for(var i = 0;i<res.length;i++) {
-            console.log(res[i].item_id + " | " + res[i].product_name + " | " + res[i].stock_quantity + " | $" + res[i].price);
+            itemsTable[i] = {
+                ID: res[i].item_id,
+                PRODUCT: res[i].product_name,
+                QUANTITY: res[i].stock_quantity,
+                PRICE: res[i].price
+            };     
         }
-        console.log("-------------------------------------------");
+        console.log("Items with low inventory");
+        console.table(itemsTable);    
         managerOptions();
     })
 };

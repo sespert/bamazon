@@ -22,11 +22,18 @@ connection.connect(function(err){
 function displayItems() {
     connection.query("SELECT item_id,product_name,price FROM products", function(err,res){
         if(err) throw err;
-        console.log("\nItem ID| Product   | Price");
-        console.log("--------------------------");
+
+        var itemsTable = [];
+
         for(var i = 0;i<res.length;i++) {
-            console.log(res[i].item_id + " | " + res[i].product_name + " | $" + res[i].price);
+            itemsTable[i] = {
+                ID: res[i].item_id,
+                PRODUCT: res[i].product_name,
+                PRICE: res[i].price
+            };     
         }
+
+        console.table(itemsTable);
         console.log("--------------------------");
         placeOrder();
     })
