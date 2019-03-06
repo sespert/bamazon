@@ -13,17 +13,22 @@ This is an Amazon-like storefront, where customers make orders and deplete stock
 First, all the products in stock is showed to the customer. Next, the customer chooses which item to buy and how many of it. Once this is done, the final price of the sale is shown and the database is updated, substracting the items the customer just bought.
 
 
-![Customer View](https:)
+![Customer View](https://github.com/sespert/bamazon/blob/master/images/CustomerView.png)
 
 ## Manager view
 
+A manager can handle the inventory, by viewing it, checking which items have low stock, add more units of a product or add a new product.
 
-![Manager View](https:)
+
+![Manager View](https://github.com/sespert/bamazon/blob/master/images/Manager.png)
 
 
 ## See the app in action
 
-![gif of app flow](https:)
+![Customer flow](https://github.com/sespert/bamazon/blob/master/images/CustomerGif.gif)
+
+![Manager flow](https://github.com/sespert/bamazon/blob/master/images/ManagerGif.gif)
+
 
 ## Tech/Framed Used
 
