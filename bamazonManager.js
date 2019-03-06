@@ -65,9 +65,10 @@ function viewProducts() {
                 PRICE: res[i].price
             };     
         }
+        console.log("---------------------------------------------------------");
         console.log("Items in stock");
         console.table(itemsTable);    
-        console.log("-------------------------------------------");
+        console.log("---------------------------------------------------------");
         managerOptions();
     })
 };
@@ -87,8 +88,10 @@ function viewInventory() {
                 PRICE: res[i].price
             };     
         }
+        console.log("---------------------------------------------------------");
         console.log("Items with low inventory");
-        console.table(itemsTable);    
+        console.table(itemsTable); 
+        console.log("---------------------------------------------------------");   
         managerOptions();
     })
 };
@@ -123,12 +126,13 @@ function addInventory(){
 
 //Helper function to check if manager typed an existing ID
 function checkID(arg) {
-    connection.query("SELECT item_id FROM products", function(err,res) {
+    connection.query("SELECT item_id,product_name FROM products", function(err,res) {
         if (err) throw err; 
         if (arg > res.length) {                
             console.log("No product with that number ID. Choose another one.");
             addInventory();
         } else {
+            console.log("OK! Let's add more " + res[arg-1].product_name);
             inquirer.prompt({
                 name:"units",
                 type:"input",
@@ -156,6 +160,7 @@ function updateInventory(arg1,arg2) {
         connection.query(query,{item_id: arg2},function(err,res){
             if(err) throw err;
             console.log("There are now " + res[0].stock_quantity + " units of " + res[0].product_name);
+            console.log("---------------------------------------------------------");   
             managerOptions();        
         });
     })

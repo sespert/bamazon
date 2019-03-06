@@ -58,12 +58,13 @@ function placeOrder(){
 
 //Helper function to check if user typed an existing ID
 function checkID(arg) {
-    connection.query("SELECT item_id FROM products", function(err,res) {
+    connection.query("SELECT item_id, product_name FROM products", function(err,res) {
         if (err) throw err;
         if (arg > res.length) {                
             console.log("No product with that number ID. Choose another one.");
             placeOrder();
         } else {
+            console.log("OK! Let's buy some " + res[arg-1].product_name);
             inquirer.prompt({
                 name:"units",
                 type:"input",
@@ -97,6 +98,7 @@ function updateInventory(arg1,arg2,arg3) {
             if(err) throw err;
             var totalPrice = res[0].price * arg3;
             console.log("The cost of your purchase is $" + totalPrice);
+            console.log("Thank you for shopping with us, we hope to see you again soon :)");
             connection.end();            
         });
     })
