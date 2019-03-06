@@ -52,7 +52,7 @@ function managerOptions() {
 
 //List every available item: the item IDs, names, prices, and quantities.
 function viewProducts() {
-    connection.query("SELECT item_id,product_name,price,stock_quantity FROM products", function(err,res){
+    connection.query("SELECT item_id,department_name,product_name,price,stock_quantity FROM products", function(err,res){
         if(err) throw err;
        
         var itemsTable = [];
@@ -60,6 +60,7 @@ function viewProducts() {
         for(var i = 0;i<res.length;i++) {
             itemsTable[i] = {
                 ID: res[i].item_id,
+                DEPARTMENT: res[i].department_name,
                 PRODUCT: res[i].product_name,
                 QUANTITY: res[i].stock_quantity,
                 PRICE: res[i].price
@@ -186,7 +187,7 @@ function addProduct() {
         message:"How many units are we adding to the inventory?"
     }]).then(function(answer){
         var query = "INSERT INTO products (product_name,department_name,price,stock_quantity) VALUES (?,?,?,?)";
-        var valToAdd = [answer.newProd, answer.departn, answer.price, answer.stockQuant];
+        var valToAdd = [answer.newProd, answer.departm, answer.price, answer.stockQuant];
         connection.query(query, valToAdd, function(err,res){
             if(err) throw err;
             console.log("Product added");
