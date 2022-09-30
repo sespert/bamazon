@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "snyk-protect": "snyk protect",
+    "snyk-protect": "snyk-protect",
     "prepare": "npm run snyk-protect"
   },
   "repository": {
@@ -21,7 +21,7 @@
   "dependencies": {
     "inquirer": "^6.2.2",
     "mysql": "^2.16.0",
-    "snyk": "^1.230.5"
+    "@snyk/protect": "latest"
   },
   "snyk": true
 }
