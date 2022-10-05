@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.13.5
+version: v1.25.0
 ignore: {}
 # patches apply the minimum changes required to fix a vulnerability
 patch:
@@ -11,3 +11,33 @@ patch:
         patched: '2019-10-04T08:31:38.365Z'
     - snyk > proxy-agent > pac-proxy-agent > https-proxy-agent:
         patched: '2019-10-04T08:31:38.365Z'
+  SNYK-JS-LODASH-567746:
+    - inquirer > lodash:
+        patched: '2022-10-05T22:13:22.146Z'
+    - snyk > lodash:
+        patched: '2022-10-05T22:13:22.146Z'
+    - snyk > inquirer > lodash:
+        patched: '2022-10-05T22:13:22.146Z'
+    - snyk > @snyk/dep-graph > lodash:
+        patched: '2022-10-05T22:13:22.146Z'
+    - snyk > snyk-config > lodash:
+        patched: '2022-10-05T22:13:22.146Z'
+    - snyk > snyk-mvn-plugin > lodash:
+        patched: '2022-10-05T22:13:22.146Z'
+    - snyk > snyk-nodejs-lockfile-parser > lodash:
+        patched: '2022-10-05T22:13:22.146Z'
+    - snyk > snyk-nuget-plugin > lodash:
+        patched: '2022-10-05T22:13:22.146Z'
+    - snyk > @snyk/dep-graph > graphlib > lodash:
+        patched: '2022-10-05T22:13:22.146Z'
+    - snyk > snyk-go-plugin > graphlib > lodash:
+        patched: '2022-10-05T22:13:22.146Z'
+    - snyk > snyk-nodejs-lockfile-parser > graphlib > lodash:
+        patched: '2022-10-05T22:13:22.146Z'
+    - snyk > snyk-nuget-plugin > dotnet-deps-parser > lodash:
+        patched: '2022-10-05T22:13:22.146Z'
+    - snyk > snyk-php-plugin > @snyk/composer-lockfile-parser > lodash:
+        patched: '2022-10-05T22:13:22.146Z'
+  SNYK-JS-TREEKILL-536781:
+    - snyk > snyk-sbt-plugin > tree-kill:
+        patched: '2022-10-05T22:13:22.146Z'
